@@ -5,7 +5,7 @@ int main(){
     printf("Bem vindo ao meu primeiro jogo em C!\n");
     printf("Neste jogo, voçê vai aprender sobre varios paises do mundo.\n");
     
-    // definindo informaçâo sobre o Brasil.
+// definindo informaçâo sobre o Brasil.
     
     char nome1[50] = "Brasil";
     char cidade1[50] = "Goiania";
@@ -33,32 +33,42 @@ int main(){
     printf("População: %d\n", populacao2);
     printf("Área: %.2f km2\n", area2);
 
-    // Comparando a populaçao dos dois países e deteminando qual a carta vencedora com base na população.
-   
-    if (populacao1 > populacao2) {
-        printf("A carta 1 venceu!\n");
-    } else {
-        printf("A carta 2 venceu!\n");
+    int opcao;
+    printf("\nEscolha uma opção para comparar:\n");
+    printf("1 - População\n");
+    printf("2 - Área\n");
+    printf("0 - Sair\n");
+    printf("Opção: ");
+    scanf("%d", &opcao);
+
+    if (opcao == 0) {
+        printf("Jogo encerrado.\n");
+        return 0;
     }
 
-    // Exibindo o resultado final do jogo, comparando a população dos dois países.
-    
     printf("\n---- Resultado Final ----\n");
 
-     if (populacao1 > populacao2) {
-        printf("%s venceu!\n", nome1);
-    } else if (populacao1 < populacao2) {
-        printf("%s venceu!\n", nome2);
-    } else {
-        printf("Empate!\n");
-    }
-    
-    if (area1 > area2) {
-        printf("%s tem a maior área!\n", nome1);
-    } else if (area1 < area2) {
-        printf("%s tem a maior área!\n", nome2);
-    } else {
-        printf("Empate na área!\n");
+    switch (opcao) {
+        case 1:
+            if (populacao1 > populacao2) {
+                printf("%s venceu em população!\n", nome1);
+            } else if (populacao1 < populacao2) {
+                printf("%s venceu em população!\n", nome2);
+            } else {
+                printf("Empate em população!\n");
+            }
+            break;
+        case 2:
+            if (area1 > area2) {
+                printf("%s venceu em área!\n", nome1);
+            } else if (area1 < area2) {
+                printf("%s venceu em área!\n", nome2);
+            } else {
+                printf("Empate em área!\n");
+            }
+            break;
+        default:
+            printf("Opção inválida. Escolha 1, 2 ou 0.\n");
     }
 
     return 0;
