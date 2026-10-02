@@ -1,75 +1,88 @@
 #include <stdio.h>
 
-int main(){
+#define MAX_NOME 50
 
-    printf("Bem vindo ao meu primeiro jogo em C!\n");
-    printf("Neste jogo, voçê vai aprender sobre varios paises do mundo.\n");
-    
-// definindo informaçâo sobre o Brasil.
-    
-    char nome1[50] = "Brasil";
-    char cidade1[50] = "Goiania";
-    int populacao1 = 1530000;
-    float area1 = 8515767.0;
+// Passo 1: criar uma estrutura para representar uma carta do jogo.
+typedef struct {
+    char pais[MAX_NOME];
+    char cidade[MAX_NOME];
+    unsigned long int populacao;
+    double area;
+    double pib;
+    int pontosTuristicos;
+    double densidadePopulacional;
+    double pibPerCapita;
+} Carta;
 
-    // definindo informação sobre a Argentina.
+// Passo 2: função para cadastrar os dados da carta.
+void cadastrarCarta(Carta *carta, int numero) {
+    printf("\n=== Cadastro da Carta %d ===\n", numero);
+    printf("Nome do pais: ");
+    scanf("%49s", carta->pais);
 
-    char nome2[50] = "Argentina";
-    char cidade2[50] = "Buenos Aires";
-    int populacao2 = 45195777;
-    float area2 = 2780400.0;
+    printf("Nome da cidade: ");
+    scanf("%49s", carta->cidade);
 
-    // Exibindo as informações sobre os paise em cartas separadas.
+    printf("Populacao: ");
+    scanf("%lu", &carta->populacao);
 
-    printf("\n---- Primeira Carta ----\n");
-    printf("Nome do país: %s\n", nome1);
-    printf("Cidade: %s\n", cidade1);
-    printf("População: %d\n", populacao1);
-    printf("Área: %.2f km2\n", area1);  
-    
-    printf("\n---- Segunda Carta ----\n");
-    printf("Nome do país: %s\n", nome2);
-    printf("Cidade: %s\n", cidade2);
-    printf("População: %d\n", populacao2);
-    printf("Área: %.2f km2\n", area2);
+    printf("Area em km2: ");
+    scanf("%lf", &carta->area);
 
-    int opcao;
-    printf("\nEscolha uma opção para comparar:\n");
-    printf("1 - População\n");
-    printf("2 - Área\n");
-    printf("0 - Sair\n");
-    printf("Opção: ");
-    scanf("%d", &opcao);
+    printf("PIB: ");
+    scanf("%lf", &carta->pib);
 
-    if (opcao == 0) {
-        printf("Jogo encerrado.\n");
-        return 0;
+    printf("Numero de pontos turisticos: ");
+    scanf("%d", &carta->pontosTuristicos);
+
+    // Passo 3: calcular as propriedades do nivel aventureiro.
+    if (carta->area > 0) {
+        carta->densidadePopulacional = carta->populacao / carta->area;
+    } else {
+        carta->densidadePopulacional = 0;
     }
 
-    printf("\n---- Resultado Final ----\n");
-
-    switch (opcao) {
-        case 1:
-            if (populacao1 > populacao2) {
-                printf("%s venceu em população!\n", nome1);
-            } else if (populacao1 < populacao2) {
-                printf("%s venceu em população!\n", nome2);
-            } else {
-                printf("Empate em população!\n");
-            }
-            break;
-        case 2:
-            if (area1 > area2) {
-                printf("%s venceu em área!\n", nome1);
-            } else if (area1 < area2) {
-                printf("%s venceu em área!\n", nome2);
-            } else {
-                printf("Empate em área!\n");
-            }
-            break;
-        default:
-            printf("Opção inválida. Escolha 1, 2 ou 0.\n");
+    if (carta->populacao > 0) {
+        carta->pibPerCapita = carta->pib / carta->populacao;
+    } else {
+        carta->pibPerCapita = 0;
     }
+}
+
+// Passo 4: função para exibir os dados da carta.
+void exibirCarta(Carta carta) {
+    printf("\n--- Carta: %s / %s ---\n", carta.pais, carta.cidade);
+    printf("Populacao: %lu\n", carta.populacao);
+    printf("Area: %.2f km2\n", carta.area);
+    printf("PIB: %.2f\n", carta.pib);
+    printf("Pontos turisticos: %d\n", carta.pontosTuristicos);
+    printf("Densidade populacional: %.2f hab/km2\n", carta.densidadePopulacional);
+    printf("PIB per capita: %.2f\n", carta.pibPerCapita);
+}
+
+int main() {
+    Carta carta1;
+    Carta carta2;
+
+    printf("Bem-vindo ao nivel Aventureiro do Super Trunfo!\n");
+    printf("Agora vamos cadastrar duas cartas e calcular as propriedades avancadas.\n");
+
+    cadastrarCarta(&carta1, 1);
+    cadastrarCarta(&carta2, 2);
+
+    printf("\n===== CARTA 1 =====");
+    exibirCarta(carta1);
+
+    printf("\n===== CARTA 2 =====");
+    exibirCarta(carta2);
+
+    printf("\n--- Comparacao rapida ---\n");
+    printf("Carta 1 tem maior populacao? %s\n", (carta1.populacao > carta2.populacao) ? "Sim" : "Nao");
+    printf("Carta 1 tem maior area? %s\n", (carta1.area > carta2.area) ? "Sim" : "Nao");
+    printf("Carta 1 tem maior densidade populacional? %s\n", (carta1.densidadePopulacional > carta2.densidadePopulacional) ? "Sim" : "Nao");
+    printf("Carta 1 tem maior PIB per capita? %s\n", (carta1.pibPerCapita > carta2.pibPerCapita) ? "Sim" : "Nao");
+
+    printf("\nNivel aventureiro concluido com sucesso!\n");
 
     return 0;
 }
